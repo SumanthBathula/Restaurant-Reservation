@@ -705,6 +705,31 @@ function AdminDashboard({ token, user }) {
     }
   };
 
+  // Add this inside AdminDashboard component
+
+const deleteTable = async (tableId) => {
+  if (!window.confirm('Are you sure you want to delete this table?')) return;
+
+  try {
+    const response = await fetch(`${API_URL}/api/admin/tables/${tableId}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      setSuccess('Table deleted successfully');
+      fetchTables();
+      setTimeout(() => setSuccess(''), 3000);
+    } else {
+      setError(data.error || 'Error deleting table');
+    }
+  } catch (error) {
+    setError('Network error. Please try again.');
+  }
+};
+
   return (
     <div className="dashboard admin-dashboard">
       <div className="tabs">
@@ -901,7 +926,7 @@ function AdminDashboard({ token, user }) {
             </form>
           </div>
 
-          <div className="tables-section">
+          {/* <div className="tables-section">
             <h3>Current Tables</h3>
             {tables.length === 0 ? (
               <p className="no-data">No tables available.</p>
@@ -916,7 +941,23 @@ function AdminDashboard({ token, user }) {
                 ))}
               </div>
             )}
-          </div>
+          </div> */}
+          <div className="tables-grid">
+  {tables.map(table => (
+    <div key={table._id} className="table-card">
+      <h4>Table {table.tableNumber}</h4>
+      <p>Capacity: {table.capacity} guests</p>
+      <p>Status: {table.isAvailable ? '✅ Available' : '❌ Unavailable'}</p>
+      <button 
+        className="btn-danger"
+        onClick={() => deleteTable(table._id)}
+      >
+        Remove Table
+      </button>
+    </div>
+  ))}
+</div>
+
         </div>
       )}
       
