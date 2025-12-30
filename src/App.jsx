@@ -705,34 +705,34 @@ function AdminDashboard({ token, user }) {
     }
   };
 
-  // Add this inside AdminDashboard component
+  // // Add this inside AdminDashboard component
 
-  const deleteTable = async (tableId) => {
-    if (!window.confirm('Are you sure you want to delete this table?')) return;
+  // const deleteTable = async (tableId) => {
+  //   if (!window.confirm('Are you sure you want to delete this table?')) return;
   
-    try {
-      const response = await fetch(`${API_URL}/api/tables/${tableId}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
+  //   try {
+  //     const response = await fetch(`${API_URL}/api/tables/${tableId}`, {
+  //       method: 'DELETE',
+  //       headers: {
+  //         'Authorization': `Bearer ${token}`,
+  //         'Content-Type': 'application/json'
+  //       }
+  //     });
   
-      const data = await response.json();
+  //     const data = await response.json();
   
-      if (response.ok) {
-        setSuccess('Table deleted successfully');
-        fetchTables(); // refresh tables
-        setTimeout(() => setSuccess(''), 3000);
-      } else {
-        setError(data.error || 'Error deleting table');
-      }
-    } catch (error) {
-      console.error('Delete table error:', error);
-      setError('Network error. Please try again.');
-    }
-  };
+  //     if (response.ok) {
+  //       setSuccess('Table deleted successfully');
+  //       fetchTables(); // refresh tables
+  //       setTimeout(() => setSuccess(''), 3000);
+  //     } else {
+  //       setError(data.error || 'Error deleting table');
+  //     }
+  //   } catch (error) {
+  //     console.error('Delete table error:', error);
+  //     setError('Network error. Please try again.');
+  //   }
+  // };
   
 
   return (
@@ -931,7 +931,7 @@ function AdminDashboard({ token, user }) {
             </form>
           </div>
 
-          {/* <div className="tables-section">
+          <div className="tables-section">
             <h3>Current Tables</h3>
             {tables.length === 0 ? (
               <p className="no-data">No tables available.</p>
@@ -946,8 +946,8 @@ function AdminDashboard({ token, user }) {
                 ))}
               </div>
             )}
-          </div> */}
-          <div className="tables-grid">
+          </div>
+          {/* <div className="tables-grid">
   {tables.map(table => (
     <div key={table._id} className="table-card">
       <h4>Table {table.tableNumber}</h4>
@@ -961,7 +961,7 @@ function AdminDashboard({ token, user }) {
       </button>
     </div>
   ))}
-</div>
+</div> */}
 
 
         </div>
