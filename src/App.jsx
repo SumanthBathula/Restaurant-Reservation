@@ -20,7 +20,7 @@ function App() {
 
   const fetchCurrentUser = async () => {
     try {
-      const response = await fetch(`${API_URL}/auth/me`, {
+      const response = await fetch(`${API_URL}/api/auth/me`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -108,7 +108,7 @@ function AuthScreen({ setUser, setToken, currentView, setCurrentView }) {
     setError('');
     setIsLoading(true);
 
-    const endpoint = currentView === 'login' ? '/auth/login' : '/auth/register';
+    const endpoint = currentView === 'login' ? '/api/auth/login' : '/api/auth/register';
     const body = currentView === 'login' 
       ? { email: formData.email, password: formData.password }
       : formData;
@@ -276,7 +276,7 @@ function CustomerDashboard({ token, user }) {
 
   const fetchTables = async () => {
     try {
-      const response = await fetch(`${API_URL}/tables`, {
+      const response = await fetch(`${API_URL}/api/tables`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await response.json();
@@ -289,7 +289,7 @@ function CustomerDashboard({ token, user }) {
   const fetchMyReservations = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(`${API_URL}/reservations/my`, {
+      const response = await fetch(`${API_URL}/api/reservations/my`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await response.json();
@@ -309,7 +309,7 @@ function CustomerDashboard({ token, user }) {
 
     try {
       const response = await fetch(
-        `${API_URL}/tables/available?date=${searchParams.date}&timeSlot=${searchParams.timeSlot}&guests=${searchParams.guests}`,
+        `${API_URL}/api/tables/available?date=${searchParams.date}&timeSlot=${searchParams.timeSlot}&guests=${searchParams.guests}`,
         {
           headers: { 'Authorization': `Bearer ${token}` }
         }
@@ -341,7 +341,7 @@ function CustomerDashboard({ token, user }) {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${API_URL}/reservations`, {
+      const response = await fetch(`${API_URL}/api/reservations`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -378,7 +378,7 @@ function CustomerDashboard({ token, user }) {
     }
 
     try {
-      const response = await fetch(`${API_URL}/reservations/${id}/cancel`, {
+      const response = await fetch(`${API_URL}/api/reservations/${id}/cancel`, {
         method: 'PATCH',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -585,8 +585,8 @@ function AdminDashboard({ token, user }) {
     setIsLoading(true);
     try {
       const url = filterDate 
-        ? `${API_URL}/admin/reservations?date=${filterDate}`
-        : `${API_URL}/admin/reservations`;
+        ? `${API_URL}/api/admin/reservations?date=${filterDate}`
+        : `${API_URL}/api/admin/reservations`;
       
       const response = await fetch(url, {
         headers: { 'Authorization': `Bearer ${token}` }
@@ -602,7 +602,7 @@ function AdminDashboard({ token, user }) {
 
   const fetchTables = async () => {
     try {
-      const response = await fetch(`${API_URL}/tables`, {
+      const response = await fetch(`${API_URL}/api/tables`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await response.json();
@@ -618,7 +618,7 @@ function AdminDashboard({ token, user }) {
     }
 
     try {
-      const response = await fetch(`${API_URL}/admin/reservations/${id}/cancel`, {
+      const response = await fetch(`${API_URL}/api/admin/reservations/${id}/cancel`, {
         method: 'PATCH',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -643,7 +643,7 @@ function AdminDashboard({ token, user }) {
     setError('');
 
     try {
-      const response = await fetch(`${API_URL}/admin/reservations/${editingReservation._id}`, {
+      const response = await fetch(`${API_URL}/api/admin/reservations/${editingReservation._id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -681,7 +681,7 @@ function AdminDashboard({ token, user }) {
     const capacity = parseInt(formData.get('capacity'));
 
     try {
-      const response = await fetch(`${API_URL}/admin/tables`, {
+      const response = await fetch(`${API_URL}/api/admin/tables`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
