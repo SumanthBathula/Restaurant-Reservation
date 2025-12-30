@@ -232,7 +232,7 @@ function AuthScreen({ setUser, setToken, currentView, setCurrentView }) {
 function Header({ user, onLogout }) {
   return (
     <header className="header">
-      <h1>🍽️ Restaurant Reservations</h1>
+      <h1>🍽️ House of Stars - Restaurant Reservations</h1>
       <div className="header-right">
         <span className="user-info">
           {user.name} ({user.role})
@@ -919,6 +919,7 @@ function AdminDashboard({ token, user }) {
           </div>
         </div>
       )}
+      
     </div>
   );
 }
