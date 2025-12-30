@@ -707,28 +707,33 @@ function AdminDashboard({ token, user }) {
 
   // Add this inside AdminDashboard component
 
-const deleteTable = async (tableId) => {
-  if (!window.confirm('Are you sure you want to delete this table?')) return;
-
-  try {
-    const response = await fetch(`${API_URL}/api/admin/tables/${tableId}`, {
-      method: 'DELETE',
-      headers: { 'Authorization': `Bearer ${token}` }
-    });
-
-    const data = await response.json();
-
-    if (response.ok) {
-      setSuccess('Table deleted successfully');
-      fetchTables();
-      setTimeout(() => setSuccess(''), 3000);
-    } else {
-      setError(data.error || 'Error deleting table');
+  const deleteTable = async (tableId) => {
+    if (!window.confirm('Are you sure you want to delete this table?')) return;
+  
+    try {
+      const response = await fetch(`${API_URL}/api/tables/${tableId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        setSuccess('Table deleted successfully');
+        fetchTables(); // refresh tables
+        setTimeout(() => setSuccess(''), 3000);
+      } else {
+        setError(data.error || 'Error deleting table');
+      }
+    } catch (error) {
+      console.error('Delete table error:', error);
+      setError('Network error. Please try again.');
     }
-  } catch (error) {
-    setError('Network error. Please try again.');
-  }
-};
+  };
+  
 
   return (
     <div className="dashboard admin-dashboard">
@@ -957,6 +962,7 @@ const deleteTable = async (tableId) => {
     </div>
   ))}
 </div>
+
 
         </div>
       )}
